@@ -4,7 +4,7 @@ item --gap – ---------------- Zurück zum FOG Server ----------------
 item RETURN Zurück zum FOG Server
 choose --default RETURN --timeout 10000 target && goto ${target}
 :RETURN
-chain http://172.18.1.6/${fog-webroot}/service/ipxe/boot.php?mac=${net0/mac} ||
+chain http://test/fog/service/ipxe/boot.php?mac=${net0/mac} ||
 prompt
 goto MENU
 autoboot```
