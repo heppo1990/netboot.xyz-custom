@@ -1,3 +1,4 @@
+#!ipxe
 ###
 ### RogueScholar iPXE Menu
 ###
@@ -6,7 +7,6 @@
 #console --x 1280 --y 800
 #console --picture https://boot.netboot.xyz/logo.png
 
-#!ipxe
 menu
 item --gap – ---------------- Secure Erase ----------------
 item SSD SSD & SSHD Secure Erase
