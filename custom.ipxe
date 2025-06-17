@@ -1,38 +1,10 @@
 #!ipxe
 menu
-item --gap – ---------------- Secure Erase ----------------
-item SSD SSD & SSHD Secure Erase
-item HDD HDD sicher löschen (ShredOS)
-item PM PartedMagic starten
-item SHELL iPXE Shell
-item RETURN Hauptmenü
+item --gap – ---------------- Zurück zum FOG Server ----------------
+item RETURN Zurück zum FOG Server
 choose --default RETURN --timeout 10000 target && goto ${target}
-:SSD
-cpair 0
-cpuid --ext 29 && set arch 64 || set arch 32
-initrd nfs://172.18.1.8:/FOG/Secure-Erase/pmagic/initrd.img
-initrd nfs://172.18.1.8:/FOG/Secure-Erase/pmagic/fu.img
-initrd nfs://172.18.1.8:/FOG/Secure-Erase/pmagic/m${arch}.img
-initrd nfs://172.18.1.8:/FOG/Secure-Erase/pmagic/SSD-loeschen/files.cgz
-iseq ${arch} 32 && chain nfs://172.18.1.8:/FOG/Secure-Erase/pmagic/bzImage initrd=initrd.img initrd=fu.img initrd=m${arch}.img initrd=files.cgz || chain nfs://172.18.1.8:/FOG/Secure-Erase/pmagic/bzImage${arch} initrd=initrd.img initrd=fu.img initrd=m${arch}.img initrd=files.cgz
-boot
-:HDD
-kernel nfs://172.18.1.8:/FOG/Secure-Erase/ShredOS/boot/shredos console=tty3 loglevel=3 shredos_exclude_boot_disc="yes" loadkeys=de lftp="open ftp://172.18.1.8; user ftp ftp; mput nwipe_*.txt; mput *.pdf" nwipe_options="--method=dod --verify=last --rounds=2 --nousb --autonuke --autopoweroff"
-boot
-:PM
-cpair 0
-cpuid --ext 29 && set arch 64 || set arch 32
-initrd nfs://172.18.1.8:/FOG/Secure-Erase/pmagic/initrd.img
-initrd nfs://172.18.1.8:/FOG/Secure-Erase/pmagic/fu.img
-initrd nfs://172.18.1.8:/FOG/Secure-Erase/pmagic/m${arch}.img
-initrd nfs://172.18.1.8:/FOG/Secure-Erase/pmagic/PMagic-starten/files.cgz
-iseq ${arch} 32 && chain nfs://172.18.1.8:/FOG/Secure-Erase/pmagic/bzImage initrd=initrd.img initrd=fu.img initrd=m${arch}.img initrd=files.cgz || chain nfs://172.18.1.8:/FOG/Secure-Erase/pmagic/bzImage${arch} initrd=initrd.img initrd=fu.img initrd=m${arch}.img initrd=files.cgz
-boot
-:SHELL
-shell ||
-goto MENU
 :RETURN
-chain http://172.18.1.6/fog/service/ipxe/boot.php?mac=${net0/mac} ||
+chain http://172.18.1.6/${fog-webroot}/service/ipxe/boot.php?mac=${net0/mac} ||
 prompt
 goto MENU
 autoboot```
